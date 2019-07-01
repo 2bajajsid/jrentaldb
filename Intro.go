@@ -2,7 +2,8 @@ package main
 
 import( 
 	"fmt"
- 	"github.com/gin-gonic/gin"
+	 "github.com/gin-gonic/gin"
+	 "github.com/gin-contrib/cors"
  	"go.mongodb.org/mongo-driver/mongo"
  	"go.mongodb.org/mongo-driver/mongo/options"
  	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -12,8 +13,10 @@ import(
 	 "router"
 	 "service"
 	 "controllers"
+	//  "http"
 )
 // import "time"
+
 
 func main(){
 
@@ -22,20 +25,24 @@ func main(){
 	serv := service.NewService(ctx, "JRentalsDB")
 	contr := controllers.NewController(serv)
 	eng := gin.Default()
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	eng.Use(cors.New(config))
+
 	router.NewRouters(contr, eng)
 	// ctx := context.Background()
 	// JRentalsDB,_ := configDB(ctx)
 
 	// r := gin.Default()
 	// r.GET("Users", func (c *gin.Context) {
-	// 	c.JSON(http.StatusOK, gin.H{
+	// 	c.JSON(200, gin.H{
 	// 		"users": getUsers(ctx, JRentalsDB), 
 	// 	})
 	// }) 
 
 	// r.GET("/User/:id", func(c *gin.Context){
 	// 	id := c.Param("id")
-	// 	c.JSON(http.StatusOK, gin.H{
+	// 	c.JSON(200, gin.H{
 	// 		"user": getUser(ctx, JRentalsDB, id), 
 	// 	})
 	// })
@@ -68,7 +75,7 @@ func main(){
 	// 		Email: Email,
 	// 	}
 	// 	result := updateUser(ctx, JRentalsDB, id, &newUser)
-	// 	c.JSON(http.StatusOK, gin.H{
+	// 	c.JSON(200, gin.H{
 	// 		"result": result, 
 	// 	})
 	// })
@@ -76,14 +83,14 @@ func main(){
 	// r.DELETE("/User/:id", func(c *gin.Context){
 	// 	id := c.Param("id")
 	// 	result := deleteUser(ctx, JRentalsDB, id)
-	// 	c.JSON(http.StatusOK, gin.H{
+	// 	c.JSON(200, gin.H{
 	// 		"result": result,
 	// 	})
 	// })
 
 	// r.DELETE("/Users", func(c *gin.Context){
 	// 	result := deleteAllUsers(ctx, JRentalsDB)
-	// 	c.JSON(http.StatusOK, gin.H{
+	// 	c.JSON(200, gin.H{
 	// 		"result": result, 
 	// 	})
 	// })
