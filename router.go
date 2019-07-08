@@ -39,6 +39,7 @@ func NewRouters(c *controllers.Controller, e *gin.Engine){
 	groupRoute.PUT(ar.Routes[11].Pattern, ar.Routes[11].RouteHandler)
 	groupRoute.DELETE(ar.Routes[12].Pattern, ar.Routes[12].RouteHandler)
 
+	// e.Run(":27017")
 	e.Run()
 }
 

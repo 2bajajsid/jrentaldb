@@ -33,6 +33,9 @@ func (c *Controller) AddUserHandler(cxt *gin.Context){
 	}
 	id,_ := c.service.CreateNewUser(&newUser)
 	fmt.Printf("New User ID: %s", id)
+	cxt.JSON(http.StatusOK, gin.H{
+		"ID": id, 
+	})
 }
 
 //GetProductsHandler is a handler for retrieving all products
@@ -59,7 +62,9 @@ func (c *Controller) AddProductHandler(cxt *gin.Context){
 		MerchantID: MerchantID,
 	}
 	id,_ := c.service.CreateNewProduct(&newProd, ID)
-	fmt.Printf("ID of new Product: %v", id)
+	cxt.JSON(http.StatusOK, gin.H{
+		"ID": id, 
+	})
 }
 
 //GetProductsList displays a list of all the products in the database
